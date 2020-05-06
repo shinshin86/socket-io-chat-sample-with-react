@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "dev:server": "yarn workspace server dev",
+    "dev:client": "yarn workspace client dev",
+    "dev": "concurrently \"yarn run dev:server\" \"yarn run dev:client\"",
+    "fmt:server": "yarn workspace server fmt",
+    "fmt:client": "yarn workspace client fmt",
+    "fmt": "concurrently \"yarn run fmt:server\" \"yarn run fmt:client\""
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}
