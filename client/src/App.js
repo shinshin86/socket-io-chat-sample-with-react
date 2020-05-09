@@ -27,7 +27,6 @@ const Select = styled.select`
 
 const ChatArea = styled.div`
   padding: 8px;
-  border: #eee solid 1px;
   border-radius: 4px;
 `;
 
@@ -35,8 +34,13 @@ const MessageList = styled.ul`
   list-style: none;
 `;
 
+const ChatMessage = styled.li`
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-bottom: solid 1px #eee;
+`;
+
 const FormContent = styled.div`
-  margin-top: 16px;
   padding: 8px;
   border: #eee solid 1px;
   border-radius: 4px;
@@ -112,7 +116,7 @@ export default () => {
   const renderMessageList = (messageList) => (
     <MessageList>
       {messageList.map((message, index) => (
-        <li key={index}>{message}</li>
+        <ChatMessage key={index}>{message}</ChatMessage>
       ))}
     </MessageList>
   );
