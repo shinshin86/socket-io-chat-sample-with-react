@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat message', ({ room, message }) => {
-    socket.to(room).emit('chat message', message);
+    socket.to(room).emit('chat message', { message, userId: socket.id });
   });
 
   socket.on('room change', ({ prevRoom, room }) => {

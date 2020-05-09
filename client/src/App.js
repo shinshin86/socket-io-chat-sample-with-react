@@ -73,9 +73,10 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    socket.on('chat message', (message) => {
-      console.log({ message });
-      const updatedMessageList = receiveMessageList.concat(message);
+    socket.on('chat message', ({ message, userId }) => {
+      const updatedMessageList = receiveMessageList.concat(
+        `${message} (${userId})`
+      );
       setReceiveMessageList(updatedMessageList);
     });
   }, [receiveMessageList]);
@@ -90,7 +91,9 @@ export default () => {
 
       clearMessage();
 
-      const updatedMessageList = receiveMessageList.concat(postMessage);
+      const updatedMessageList = receiveMessageList.concat(
+        `${postMessage} (${socket.id})`
+      );
       setReceiveMessageList(updatedMessageList);
     },
     [selectedRoom, postMessage, receiveMessageList]
