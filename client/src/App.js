@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
-const ENDPOINT = 'http://localhost:3001';
+
+// Refer to the host's IP to be available within the local network
+const ENDPOINT =
+  window.location.protocol + '//' + window.location.hostname + ':3001';
 
 // initlize socket
 const socket = io(ENDPOINT);
