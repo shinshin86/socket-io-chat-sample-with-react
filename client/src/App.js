@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
 import io from 'socket.io-client';
 
 // Refer to the host's IP to be available within the local network
@@ -8,59 +7,6 @@ const ENDPOINT =
 
 // initlize socket
 const socket = io(ENDPOINT);
-
-const Container = styled.div`
-  margin: 32px;
-  border: #eee solid 1px;
-  border-radius: 4px;
-`;
-
-const Title = styled.div`
-  padding: 8px;
-`;
-const Header = styled.div`
-  padding: 8px;
-  border: #eee solid 1px;
-  border-radius: 4px;
-`;
-
-const Select = styled.select`
-  margin-left: 8px;
-`;
-
-const ChatArea = styled.div`
-  padding: 8px;
-  border-radius: 4px;
-`;
-
-const MessageList = styled.ul`
-  list-style: none;
-`;
-
-const ChatMessage = styled.li`
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-bottom: solid 1px #eee;
-`;
-
-const FormContent = styled.div`
-  padding: 8px;
-  border: #eee solid 1px;
-  border-radius: 4px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  padding: 8px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-`;
-
-const Button = styled.button`
-  margin-left: 8px;
-`;
 
 export default () => {
   const [notice, setNotice] = useState('');
@@ -117,50 +63,50 @@ export default () => {
   );
 
   const renderMessageList = (messageList) => (
-    <MessageList>
+    <ul>
       {messageList.map((message, index) => (
-        <ChatMessage key={index}>{message}</ChatMessage>
+        <li key={index}>{message}</li>
       ))}
-    </MessageList>
+    </ul>
   );
 
   return (
-    <Container>
-      <Title>
+    <div>
+      <div>
         <h1>socket-io-chat-sample-with-react</h1>
-      </Title>
-      <Header>
+      </div>
+      <div>
         <p>Your Id: {userId}</p>
         <p>
           Selected Room:
-          <Select
+          <select
             value={selectedRoom}
             onChange={({ target }) => changeRoom(target.value)}
           >
             <option value="general">general</option>
             <option value="room1">room1</option>
             <option value="room2">room2</option>
-          </Select>
+          </select>
         </p>
         <p>Notice: {notice}</p>
-      </Header>
-      <ChatArea>
+      </div>
+      <div>
         {!!receiveMessageList.length ? (
           renderMessageList(receiveMessageList)
         ) : (
           <div style={{ padding: 20 }}>not message</div>
         )}
-      </ChatArea>
-      <FormContent>
-        <Form>
-          <Input
+      </div>
+      <div>
+        <form>
+          <input
             type="text"
             value={postMessage}
             onChange={({ target }) => setPostMessage(target.value)}
           />
-          <Button onClick={(e) => onSubmit(e)}>Send</Button>
-        </Form>
-      </FormContent>
-    </Container>
+          <button onClick={(e) => onSubmit(e)}>Send</button>
+        </form>
+      </div>
+    </div>
   );
 };
