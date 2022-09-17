@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import io from 'socket.io-client';
+import { Flex } from '@chakra-ui/react';
+import SideNav from './components/SideNav';
+import MainContent from './components/MainContent';
 
 // Refer to the host's IP to be available within the local network
 const ENDPOINT =
@@ -7,6 +10,13 @@ const ENDPOINT =
 
 // initlize socket
 const socket = io(ENDPOINT);
+
+// rooms
+const ROOMS = [
+  { id: 'general', name: 'General' },
+  { id: 'room1', name: 'Room 1' },
+  { id: 'room2', name: 'Room 2' },
+];
 
 export default () => {
   const [notice, setNotice] = useState('');
@@ -52,61 +62,24 @@ export default () => {
     [selectedRoom, postMessage, receiveMessageList]
   );
 
-  const changeRoom = useCallback(
-    (room) => {
-      const prevRoom = selectedRoom;
-      setSelectedRoom(room);
-
-      socket.emit('room change', { prevRoom, room });
-    },
-    [selectedRoom]
-  );
-
-  const renderMessageList = (messageList) => (
-    <ul>
-      {messageList.map((message, index) => (
-        <li key={index}>{message}</li>
-      ))}
-    </ul>
-  );
+  const changeRoom = (room) => {
+    const prevRoom = selectedRoom;
+    setSelectedRoom(room);
+    socket.emit('room change', { prevRoom, room });
+  };
 
   return (
-    <div>
-      <div>
-        <h1>socket-io-chat-sample-with-react</h1>
-      </div>
-      <div>
-        <p>Your Id: {userId}</p>
-        <p>
-          Selected Room:
-          <select
-            value={selectedRoom}
-            onChange={({ target }) => changeRoom(target.value)}
-          >
-            <option value="general">general</option>
-            <option value="room1">room1</option>
-            <option value="room2">room2</option>
-          </select>
-        </p>
-        <p>Notice: {notice}</p>
-      </div>
-      <div>
-        {!!receiveMessageList.length ? (
-          renderMessageList(receiveMessageList)
-        ) : (
-          <div style={{ padding: 20 }}>not message</div>
-        )}
-      </div>
-      <div>
-        <form>
-          <input
-            type="text"
-            value={postMessage}
-            onChange={({ target }) => setPostMessage(target.value)}
-          />
-          <button onClick={(e) => onSubmit(e)}>Send</button>
-        </form>
-      </div>
-    </div>
+    <Flex>
+      <SideNav rooms={ROOMS} changeRoom={changeRoom} />
+      <MainContent
+        notice={notice}
+        userId={userId}
+        selectedRoom={selectedRoom}
+        postMessage={postMessage}
+        receiveMessageList={receiveMessageList}
+        setPostMessage={setPostMessage}
+        onSubmit={onSubmit}
+      />
+    </Flex>
   );
 };
