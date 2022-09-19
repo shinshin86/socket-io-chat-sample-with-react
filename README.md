@@ -1,6 +1,9 @@
 # socket-io-chat-sample-with-react
 
-Sample Socket.io chat with React
+**WIP: This app does not yet work perfectly.**
+
+Sample Socket.io chat with React.  
+You can chat within the local network by accessing the `IP address:3000` of the host PC.
 
 
 
