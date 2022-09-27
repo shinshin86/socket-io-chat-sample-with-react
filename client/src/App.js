@@ -70,7 +70,11 @@ export default () => {
 
   return (
     <Flex>
-      <SideNav rooms={ROOMS} changeRoom={changeRoom} />
+      <SideNav
+        rooms={ROOMS}
+        selectedRoom={selectedRoom}
+        changeRoom={changeRoom}
+      />
       <MainContent
         notice={notice}
         userId={userId}
